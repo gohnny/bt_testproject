@@ -4,7 +4,7 @@ return [
     'id' => 'bintime test project',
     'language' => 'en',
     'basePath' => realpath(__DIR__ . '/../'),
-    'bootstrap' => ['debug'],
+    'bootstrap' => ['debug', 'gii'],
     'components' => [
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
@@ -18,7 +18,8 @@ return [
 //        'db' => require(__DIR__ . '/db.php'),
     ],
     'modules' => [
-        'debug' => ['class' => 'yii\debug\Module']
+        'debug' => ['class' => 'yii\debug\Module'],
+        'gii' => ['class' => 'yii\gii\Module']
     ]
 ];
 
