@@ -11,11 +11,18 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'formatter' => [
+            'dateFormat' => 'dd.MM.yyyy',
+            'datetimeFormat' => 'php:d.m.Y H:i',
+            'decimalSeparator' => ',',
+            'thousandSeparator' => '.',
+            'currencyCode' => 'EUR',
+        ],
         'request' => [
             'cookieValidationKey' => 'super secret code 12123151465446542'
         ],
 
-//        'db' => require(__DIR__ . '/db.php'),
+        'db' => require(__DIR__ . '/db.php'),
     ],
     'modules' => [
         'debug' => ['class' => 'yii\debug\Module'],

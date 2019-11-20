@@ -1,4 +1,4 @@
 <?php
 ?>
 
-<h1>Start</h1>
+<h1>Start app</h1>
