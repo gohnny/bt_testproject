@@ -39,6 +39,7 @@ AppAsset::register($this);
             'items' => [
                 ['label' => 'user list', 'url' => ['/user/index']],
                 ['label' => 'user create', 'url' => ['/user/create']],
+                ['label' => 'address list', 'url' => ['user-address/index']],
             ],
         ]);
         NavBar::end();

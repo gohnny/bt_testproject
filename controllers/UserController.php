@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\AddressForm;
 use app\models\UserRegistrationForm;
 use Yii;
 use app\models\UserRecord;
+use app\models\UserAddress;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -57,9 +59,18 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $dataProvider = new ActiveDataProvider([
+            'query' => UserAddress::find()->andWhere(['user_id' => $id]),
+            'pagination' => [
+                'pageSize' => 5,
+            ]
+        ]);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
         ]);
+
     }
 
     /**
@@ -86,17 +97,23 @@ class UserController extends Controller
     public function actionCreate()
     {
         $userRegistrationForm = new UserRegistrationForm();
+        $addressForm = new AddressForm();
 
-        if ($userRegistrationForm->load(Yii::$app->request->post()))
-            if ($userRegistrationForm->validate()) {
+        if ($userRegistrationForm->load(Yii::$app->request->post()) && $addressForm->load(Yii::$app->request->post()))
+            if ($userRegistrationForm->validate() && $addressForm->validate()) {
                 $userRecord = new UserRecord();
+                $userAddress = new UserAddress();
                 $userRecord->setUserRegistrationForm($userRegistrationForm);
                 $userRecord->save();
+                $userAddress->setUserAddress($addressForm, $userRecord);
+                $userAddress->save();
+
                 return $this->redirect(['view', 'id' => $userRecord->id]);
             }
 
         return $this->render('create', [
             'userRegistrationForm' => $userRegistrationForm,
+            'addressForm' => $addressForm
         ]);
     }
 
@@ -116,7 +133,6 @@ class UserController extends Controller
                 return $this->redirect(['view', 'id' => $userRegistrationForm->id]);
             }
 
-
         return $this->render('update', ['userRegistrationForm' => $userRegistrationForm]);
     }
 
@@ -131,8 +147,11 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $userRecord = $this->findModel($id);
 
-        return $this->redirect(['index']);
+        if (Yii::$app->request->isPost) {
+            $userRecord->delete();
+        }
+        return $this->redirect(['user/index']);
     }
 }

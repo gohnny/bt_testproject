@@ -1,5 +1,8 @@
 <?php
 
+use yii\helpers\Url;
+use yii\web\UrlManager;
+use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -13,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-record-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title . ' ' . $model->surename) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -38,4 +41,33 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+</div>
+<div class="user-address-view">
+    <h1><?= Html::encode($this->title . ' ' . $model->surename) . ' address delivery' ?></h1>
+
+    <p>
+        <a href="<?= Yii::$app->urlManager->createUrl(["user-address/create"]) ?>" class="btn btn-success">Add user
+            delivery address+</a>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'user_id',
+            'postcode',
+            'country',
+            'city:ntext',
+            'street:ntext',
+            'house_number',
+            'apart_number',
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    return Url::to(['user-address/' . $action, 'id' => $model->id]);
+                }
+            ],
+        ],
+    ]); ?>
 </div>

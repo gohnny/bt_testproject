@@ -5,7 +5,6 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 
-
 class UserRecord extends ActiveRecord
 {
     public static function TableName()
@@ -37,5 +36,17 @@ class UserRecord extends ActiveRecord
         $this->email = $userRegistrationForm->email;
 
     }
+
+    public function getUserAddress()
+    {
+        return $this->hasMany(UserAddress::className(), ['id' => 'user_id']);
+    }
+
+    public function existEmail($email)
+    {
+        $count = static::find()->where(['email' => $email])->count();
+        return $count > 0;
+    }
+
 
 }
