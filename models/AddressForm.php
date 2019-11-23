@@ -12,6 +12,7 @@ class AddressForm extends Model
     public $street;
     public $house_number;
     public $apart_number;
+    public $user_id;
 
     public function rules()
     {
@@ -26,5 +27,6 @@ class AddressForm extends Model
             ['apart_number', 'number', 'max' => 9999],
         ];
     }
+
 
 }

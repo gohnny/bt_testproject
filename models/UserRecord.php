@@ -39,7 +39,7 @@ class UserRecord extends ActiveRecord
 
     public function getUserAddress()
     {
-        return $this->hasMany(UserAddress::className(), ['id' => 'user_id']);
+        return $this->hasMany(UserAddress::className(), ['user_id' => 'id']);
     }
 
     public function existEmail($email)

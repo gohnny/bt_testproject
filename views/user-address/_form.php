@@ -12,17 +12,17 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'postcode')->textInput()->hint('5 digit')->label('Post code') ?>
+    <?= $form->field($addressForm, 'postcode')->textInput()->hint('5 digit')->label('Post code') ?>
 
-    <?= $form->field($model, 'country')->textInput()->hint('example: UA ') ?>
+    <?= $form->field($addressForm, 'country')->textInput()->hint('example: UA ') ?>
 
-    <?= $form->field($model, 'city')->textInput() ?>
+    <?= $form->field($addressForm, 'city')->textInput() ?>
 
-    <?= $form->field($model, 'street')->textInput() ?>
+    <?= $form->field($addressForm, 'street')->textInput() ?>
 
-    <?= $form->field($model, 'house_number')->textInput() ?>
+    <?= $form->field($addressForm, 'house_number')->textInput() ?>
 
-    <?= $form->field($model, 'apart_number')->textInput() ?>
+    <?= $form->field($addressForm, 'apart_number')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

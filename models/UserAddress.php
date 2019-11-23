@@ -38,4 +38,20 @@ class UserAddress extends ActiveRecord
         $this->apart_number = $addressForm->apart_number;
     }
 
+    public function addUserAddress($addressForm, $userRecord)
+    {
+        $this->postcode = $addressForm->postcode;
+        $this->country = $addressForm->country;
+        $this->user_id = $userRecord->id;
+        $this->city = $addressForm->city;
+        $this->street = $addressForm->street;
+        $this->house_number = $addressForm->house_number;
+        $this->apart_number = $addressForm->apart_number;
+    }
+
+    public function getUsernumber()
+    {
+        return $this->hasOne(UserRecord::className(), ['id' => 'user_id']);
+    }
+
 }

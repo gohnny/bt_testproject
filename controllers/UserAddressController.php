@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\AddressForm;
 use Yii;
+use app\models\UserRecord;
 use app\models\UserAddress;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -65,16 +67,21 @@ class UserAddressController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
-        $model = new UserAddress();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        $addressForm = new AddressForm();
+        $userRecord = UserRecord::findOne($id);
+        if ($addressForm->load(Yii::$app->request->post()))
+            if ($addressForm->validate()) {
+                $userAddress = new UserAddress();
+                $userAddress->addUserAddress($addressForm, $userRecord);
+                $userAddress->save();
+                return $this->redirect(['user/view', 'id' => $userRecord->id]);
+            }
 
         return $this->render('create', [
-            'model' => $model,
+            'addressForm' => $addressForm,
+
         ]);
     }
 

@@ -46,8 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title . ' ' . $model->surename) . ' address delivery' ?></h1>
 
     <p>
-        <a href="<?= Yii::$app->urlManager->createUrl(["user-address/create"]) ?>" class="btn btn-success">Add user
-            delivery address+</a>
+        <?= Html::a('Create address', ['user-address/create', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= GridView::widget([
