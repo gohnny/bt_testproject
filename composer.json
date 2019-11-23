@@ -3,7 +3,8 @@
     "yiisoft/yii2": "^2.0",
     "yiisoft/yii2-debug": "*",
     "yiisoft/yii2-gii": " ~2.1.0",
-    "yiisoft/yii2-bootstrap": "^2.0"
+    "yiisoft/yii2-bootstrap": "^2.0",
+    "fzaninotto/faker": "*"
   },
   "config": {
     "fxp-asset": {
