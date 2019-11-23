@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{update} {delete}',
                 'urlCreator' => function ($action, $model, $key, $index) {
-                    return Url::to(['user-address/' . $action, 'id' => $model->id]);
+                    return Url::to(['user-address/' . $action, 'id' => $model->id, 'user_id' => $model->user_id]);
                 }
             ],
         ],

@@ -63,6 +63,22 @@ class UserAddressController extends Controller
     }
 
     /**
+     * Finds the UserAddress model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return UserAddress the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = UserAddress::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    /**
      * Creates a new UserAddress model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -94,14 +110,16 @@ class UserAddressController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $addressForm = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($addressForm->load(Yii::$app->request->post()))
+            if ($addressForm->validate()) {
+                $addressForm->save();
+                return $this->redirect(['user/view', 'id' => $addressForm->user_id]);
         }
 
         return $this->render('update', [
-            'model' => $model,
+            'addressForm' => $addressForm,
         ]);
     }
 
@@ -111,27 +129,17 @@ class UserAddressController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $user_id)
     {
-        $this->findModel($id)->delete();
+        $userAddress = $this->findModel($id);
 
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the UserAddress model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return UserAddress the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = UserAddress::findOne($id)) !== null) {
-            return $model;
+        if (Yii::$app->request->isPost) {
+            $userAddress->delete();
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        return $this->redirect(['user/view', 'id' => $user_id]);
     }
 }
