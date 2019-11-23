@@ -27,12 +27,13 @@ class UserRecord extends ActiveRecord
 
     public function setUserRegistrationForm(UserRegistrationForm $userRegistrationForm)
     {
+        $createdate = new \DateTime('now');
         $this->login = $userRegistrationForm->login;
         $this->password = $userRegistrationForm->password;
         $this->name = $userRegistrationForm->name;
         $this->surename = $userRegistrationForm->surename;
         $this->gender = $userRegistrationForm->gender;
-        $this->create_date = $userRegistrationForm->create_date;
+        $this->create_date = $createdate->format(\DateTime::ISO8601);
         $this->email = $userRegistrationForm->email;
 
     }
@@ -47,6 +48,13 @@ class UserRecord extends ActiveRecord
         $count = static::find()->where(['email' => $email])->count();
         return $count > 0;
     }
+
+    public function existLogin($login)
+    {
+        $count = static::find()->where(['login' => $login])->count();
+        return $count > 0;
+    }
+
 
 
 }

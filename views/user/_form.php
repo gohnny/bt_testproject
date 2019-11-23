@@ -24,9 +24,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($userRegistrationForm, 'gender')->dropDownList(['no information' => 'no information', 'male' => 'male', 'female' => 'female']) ?>
 
-    <?= $form->field($userRegistrationForm, 'create_date') ?>
-
     <?= $form->field($userRegistrationForm, 'email') ?>
+
 </div>
 
 <h1><?= Html::encode('User delivery address') ?></h1>

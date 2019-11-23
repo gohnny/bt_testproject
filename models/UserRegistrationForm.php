@@ -19,6 +19,7 @@ class UserRegistrationForm extends Model
     {
         return [
             ['email', 'errorIfEmailUsed'],
+            ['login', 'errorIfLoginUsed'],
             ['email', 'email'],
             [['login', 'password', 'name', 'surename', 'gender', 'email'], 'required'],
             [['login', 'password', 'name', 'surename', 'gender', 'email'], 'safe'],
@@ -46,6 +47,12 @@ class UserRegistrationForm extends Model
         $this->gender = $userRecord->gender;
         $this->create_date = $userRecord->create_date;
         $this->email = $userRecord->email;
+    }
+
+    public function errorIfLoginUsed()
+    {
+        if (UserRecord::existLogin($this->login))
+            $this->addError('login', "This login already exits");
     }
 
 }
